@@ -113,3 +113,75 @@ Excluded (not 2026): MSGNN / FiLL lead-lag datasets (He et al., LoG 2022) → `[
 - Leaves open: using checkpoint-dated LLMs to *build relation graphs* as of a date.
 
 Excluded: Gao, Jiang & Yan, *A Test of Lookahead Bias in LLM Forecasts* (arXiv 2512.23847, first posted 2025-12-29) → 2025; relevant to A11 but outside the rule.
+
+## A4. LLM agents & multi-agent trading
+
+**A4-1. Kohli — *Decorrelating the Advice Layer: A Calibrated Fragility Metric and Tested Mitigations for Synchronized Liquidation in Agentic Wealth Management*.** <https://arxiv.org/abs/2610.37705> · 2026-10-26 · pre (q-fin.RM) · `[ABS]`
+- Summary: agent-based model of AI advisory agents; model concentration drives security-level crowding, synchronised automation drives index tail losses; proposes a fragility index (hold-out R² 0.56) and mitigations (dispersed overlay parameters, staged execution).
+- Task: simulation of systemic risk from correlated AI agents. Data: calibrated to 33 years of equity returns. Code: none stated.
+- Leaves open: **empirical** detection of AI-agent herding in real market co-movement networks (link to A1/A9).
+
+**A4-2. Chen, Xu, Chen, Lu & Jin — *Agent Policy-Value Audit: Separating Transition Composition from Event Selection in Financial LLM Agents*.** <https://arxiv.org/abs/2610.04040> · 2026-10-02 · pre (cs.AI) · `[ABS]`
+- Summary: permutation-style audit that separates an LLM agent's returns into passive composition and true event-selection skill; applied to 723 earnings events at 44 US firms.
+- Task: agent evaluation methodology. Code: none stated.
+- Leaves open: audit tools for agents beyond earnings events; relational (cross-stock) selection skill.
+
+**A4-3. Wang, Wang & He — *MintEval: Do LLMs Implement the Trading Strategy You Asked For?*** <https://arxiv.org/abs/2610.03080> · 2026-10-02 · pre (cs.SE) · `[ABS]`
+- Summary: behavioural-equivalence benchmark (800 tasks) for natural-language→strategy code; scores bar-by-bar action match. Crypto data (BTCUSDT 15-min), method transfers. Code: <https://github.com/spearmintai/minteval>.
+- Leaves open: equity version; multi-asset strategies.
+
+**A4-4. Feng, Dai, Pan, Lau, Xu & Liu — *Governed Self-Evolution for Autonomous Investing: A Multi-Agent LLM System with an Invariant Core* (Steward).** <https://arxiv.org/abs/2610.30557> · 2026-10-22 · pre (cs.AI) · `[ABS]`
+- Summary: nine-role multi-agent system with a protected core (order logic, risk rules) that self-edits prompts via nightly grading; 5-month live deployment + replay + 2015–2026 backtest. Code: <https://github.com/yebof/quant-agent>.
+- Leaves open: short live window; governance evaluation is anecdotal.
+
+**A4-5. Xue — *Representation Signatures and Risk-Feedback Alignment in LLM Trading Agents* (TradeArena).** <https://arxiv.org/abs/2605.28850> · 2026-05 (v2 2026-05-30) · pre (cs.LG) · `[ABS-s]`
+- Summary: auditable trading-agent testbed with risk reports, execution simulation and replayable trajectories; finds a "correlation blind spot" — LLM rationales justify exposure to coupled assets that the risk layer has to clip.
+- Leaves open: **agents do not reason about cross-asset dependence** → a graph-aware agent/risk layer is a gap.
+
+Crowding note: live LLM-trading benchmarks proliferated in late 2025 (Agent Market Arena 2510.11695, LiveTradeBench 2511.03628, AI-Trader 2512.10971, StockBench) — all 2025, excluded. 2026 titles seen only in search snippets, `[UNVERIFIED]`: TradeTrap (reliability/faithfulness of trading agents, ~2026-02), AlphaForgeBench (~2026-02).
+
+## A5. Reinforcement learning for trading / portfolios
+
+**A5-1. Tavakoli et al. — *Certifying Reward Alignment in Portfolio Reinforcement Learning*.** <https://arxiv.org/abs/2610.34153> · 2026-10-25 · PR (workshop IAFM @ ICAIF 2026) · `[ABS]`
+- Summary: audit certifying whether an RL policy implements its intended mean-variance objective; reward calibration preserves targets but does not improve backtests. Data: synthetic + 10/30/49 US industry portfolios (Kenneth French library, likely public).
+- Leaves open: certification for richer objectives; relational state.
+
+**A5-2. Song & Xiang — *When News Gets Old: Portfolio Allocation with Reinforcement Learning and Large Language Models*.** <https://arxiv.org/abs/2610.30564> · 2026-10-22 · pre (cs.LG) · `[ABS]`
+- Summary: LLM signals from SEC filings; dropping stale news helps the LLM allocator; RL policies gain nothing consistent from news-age information. Net of costs, 2023–2025.
+- Leaves open: RL adds little over simpler allocators — another negative result.
+
+**A5-3. Koulouris & Campajola — *Beyond Supra-Competitive Outcomes: Collusive Behaviour in Deep Reinforcement Learning for Optimal Execution Games*.** <https://arxiv.org/abs/2610.00619> · 2026-09-30 · pre (q-fin.TR) · `[ABS]`
+- Summary: independent PPO agents in a 2-player Almgren–Chriss liquidation game learn supra-competitive outcomes with punishment after deviation. Simulated only.
+- Leaves open: detection of algorithmic collusion in real data.
+
+**A5-4. Gelissen & Yuan — *Data-Driven Dynamic Portfolio Selection with Vine Copula Simulation and Reinforcement Learning*.** <https://arxiv.org/abs/2610.20037> · 2026-10-14 · pre (q-fin.PM) · `[ABS]`
+- Summary: vine-copula scenario generator + recurrent RL with CVaR penalty; 7-asset panel, 22 monthly periods. Small evaluation.
+
+**A5-5. Kashif & Ślepaczuk — *Deep Reinforcement Learning Framework for Diversified Portfolio Management Across Global Equity Markets*.** <https://arxiv.org/abs/2605.17307> · 2026-05-17 · pre (q-fin.PM) · `[ABS-s]`
+- Summary: SAC with transaction costs, turnover penalty and walk-forward retraining; 16 out-of-sample folds 2003–2026 on Nasdaq-100, Nikkei 225, Euro Stoxx 50. Notable for honest walk-forward design and a European index.
+
+**A5-6. Ozechi, Francis, Yakanu & Byers — *Comparative Evaluation of Modern Deep Learning Methodologies for Portfolio Optimization*.** <https://arxiv.org/abs/2604.24486> · 2026-04-27 · pre (cs.CE) · `[ABS-s]`
+- Summary: compares GNN, DRL, Transformer and autoencoder approaches with classical models on equities/ETFs/bonds 2015–2023.
+
+## A6. ML asset pricing & alpha/factor mining
+
+**A6-1. Wang & Ventre — *FactorBench: A Portfolio-Aware Benchmark for Automated Factor Mining*.** <https://arxiv.org/abs/2610.06947> · 2026-10-03 · pre (q-fin.PM) · `[ABS]`
+- Summary: ~5,000 factors from nine mining methods across five equity markets, judged on validity, generalisation, distinctness and after-cost portfolio value; no paradigm consistently wins.
+- Leaves open: field has more methods than evaluation; benchmark itself now exists → **evaluation niche partly closed**.
+
+**A6-2. Huang et al. — *AlphaRLM: Aligning Language Models for Literature-Grounded Symbolic Factor Discovery*.** <https://arxiv.org/abs/2610.14959> · 2026-10-10 (v3 10-15) · pre (cs.AI) · `[ABS]`
+- Summary: RL-aligned LLM that writes executable factors from financial literature; CSI 300/1000, S&P 500.
+
+**A6-3. Qu, Chen & Wang — *Propose, Don't Judge: An Anytime-Valid Referee for LLM Agents That Mine Investment Factors*.** <https://arxiv.org/abs/2609.27051> · 2026-09-22 · pre (cs.AI) · `[ABS]`
+- Summary: agent proposes, a fixed betting-based (e-value) referee admits factors using only post-submission data, giving false-discovery control; certification takes ~500 trading days. CSI 500 walk-forward.
+- Leaves open: anytime-valid testing for other ML-in-finance claims (e.g. graph edges, agent skill).
+
+**A6-4. Pan, Ding & Giesecke — *Agentic Empirical Asset Pricing: Methodological Foundations*.** <https://arxiv.org/abs/2609.00731> · 2026-09-01 · pre (cs.AI) · `[ABS]`
+- Summary: reference architecture + evaluation standard for LLM agents doing factor research (SEADS vs five baselines; reliability across re-runs); reports negative findings.
+
+**A6-5. Shi, Yan, Cai & Lv — *Hubble: An LLM-Driven Agentic Framework for Safe, Diverse, and Reproducible Alpha Factor Discovery*.** <https://arxiv.org/abs/2604.09601> · 2026-03-09 (v2 04-14) · pre (cs.AI) · `[ABS-s]`
+
+**A6-6. Wang et al. — *FactorMiner: A Self-Evolving Agent with Skills and Experience Memory for Financial Alpha Discovery*.** <https://arxiv.org/abs/2602.14670> · 2026-02 · pre · `[ABS-s]`
+
+Also seen in listings, not opened (`[UNVERIFIED]`): AlphaPADI (2610.04959, diffusion for formulaic alphas), EverMine (2609.33524, long-horizon alpha research agents), Residual Learning in Empirical Asset Pricing (2610.09613). Background-era AAAI 2026 papers first posted 2025 (Alpha Jungle MCTS, 2505.11122) excluded.
+Crowding: **LLM alpha mining is one of the most crowded 2026 niches** (≥9 papers found in one sweep, heavy Chinese-market/Qlib focus).

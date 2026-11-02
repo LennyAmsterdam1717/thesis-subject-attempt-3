@@ -62,3 +62,15 @@ Notes on the taxonomy:
 ## Phase 1 decisions
 - Papers first posted on arXiv in 2025 but published in a 2026 venue (e.g. Kronos, AAAI 2026) are **excluded** under the strict 2026 rule, or kept only as `[BACKGROUND]` when they are a named library/dataset.
 - Journal papers in 2026 issues with 2025 DOIs (online-first 2025) are excluded.
+
+### A4 Agents
+- listing scan q-fin.PM/TR/RM 2026-10
+- `2026 arxiv LLM trading agents benchmark live market evaluation multi-agent stock`
+
+### A5 RL
+- listing scan q-fin.PM/TR 2026-10
+- `2026 arxiv deep reinforcement learning portfolio optimization graph OR transaction costs stocks`
+
+### A6 Alpha / asset pricing
+- listing scan q-fin.PM/CP 2026-10, q-fin.ST 2026-09
+- `2026 arxiv LLM formulaic alpha factor mining agent`
