@@ -180,3 +180,38 @@ Scoring (briefing §9): Novelty ×3, Supervisor fit ×2, Data ×2, Feasibility �
 **12. Scores.** Novelty 5 (15) · Fit 4 (8) · Data 3 (6) · Feasibility 3 (6) · Evaluation 3 · AI relevance 4 · Artefact 4 · Industry 4 (credit-risk / supply-chain-risk consulting) · Interests 4 → **54 / 70**.
 
 **13. Questions for the supervisor.** Which credit events did she have in mind (defaults, downgrades, CDS)? Is a few-hundred-event dataset enough? Can UU provide WRDS (Compustat customer segments, CRSP delisting returns)? Interest from the AI & Finance Lab (Ferwerda)?
+
+### Card 5 — Is the learned market graph real? Matching graphs learned by stock models against disclosed company relations *(I7)*
+
+**1. Pitch.** Many stock models learn their own graph (attention, structure learning, "dynamic relations"). Are those graphs economically meaningful — do they recover supplier, competitor and ownership links — or just sector/size clusters? This thesis builds a ground-truth relation set from public filings and audits learned graphs against it over time.
+
+**2. Research question.** To what extent do graphs learned by 2025–26 stock models (and by statistical estimators) recover disclosed economic relations between firms, and does recovery predict where the graph helps forecasting?
+- SQ1: Precision/recall of learned edges vs EDGAR/Wikidata relations, after controlling for sector and size similarity.
+- SQ2: Do learned edges anticipate relations disclosed later (link-prediction view)?
+- SQ3: Is the A1-5 "near-uniform attention" result general across models?
+
+**3. Directions hit.** Temporal ✔ · link prediction ◐ (SQ2) · heterogeneous ground truth ✔ · time series + graph ✔ · knowledge networks ✔.
+
+**4. Closest work and the difference.**
+- A1-2 GAPNet (2602.00888) `[ABS]` and A1-5 Guo (2609.08106) `[ABS]` learn/analyse graphs but never compare them with real relations.
+- 2606.08468 (*Nonparametric undirected graphical model selection using diffusion models*, 2026) `[ABS-s]` compares one estimated graph with competitor/customer relations for a small set — statistical, not learned GNN graphs, small scale.
+- A1-4 (2604.19476) `[ABS]` builds typed relations from 10-Ks — usable as ground truth, not as audit.
+- Background: Pu et al. 2023 L2G (learned momentum networks).
+
+**5. Kill test.** → **Weakened** by 2606.08468 (and older correlation-vs-supply-chain reconstructions, e.g. 2302.09906). Differentiation: audit of *deep-learned* temporal graphs across several 2025–26 architectures, with a public typed ground truth and a time dimension.
+
+**6. Data.** Prices (Stooq/yfinance); relations from 10-K customer/competitor mentions (EDGAR), SIC codes, Wikidata. Access risk: **low**.
+
+**7. Method.** Re-train 3–4 open-source models (MASTER, a GAT/structure-learning model, a lead-lag estimator, Graphical Lasso) under one protocol; extract per-window graphs; compare with ground truth via precision@k, AUROC on edge scores, null models preserving sector/size (configuration / block models).
+
+**8. Evaluation.** Chronological splits for the models; null-model-adjusted recovery; temporal anticipation tests (edges learned at t vs relations first disclosed > t).
+
+**9. Artefact.** Side-by-side "learned vs disclosed" graph viewer per firm.
+
+**10. Feasibility.** Good (reuse of public model code). Risk: reproducing models' training pipelines; negative result likely ("graphs ≈ sector"). Fallback: statistical estimators only + one deep model.
+
+**11. Ethics.** Firm-level only.
+
+**12. Scores.** Novelty 3 (9) · Fit 4 (8) · Data 4 (8) · Feasibility 4 (8) · Evaluation 4 · AI relevance 4 · Artefact 3 · Industry 3 · Interests 4 → **51 / 70**.
+
+**13. Questions.** Is a "negative/audit" thesis acceptable to the examiners? Which ground-truth relations does she trust most?
