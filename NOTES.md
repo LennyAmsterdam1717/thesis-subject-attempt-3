@@ -104,3 +104,21 @@ Notes on the taxonomy:
 - `2026 temporal knowledge graph link prediction companies financial events OR "company relation" prediction graph neural network arxiv`
 
 Phase 1 complete: 12/12 areas covered (≈70 2026 items, of which ~50 `[ABS]`, rest `[ABS-s]`/`[UNVERIFIED]`). No full texts opened in this run (`[FT]` = 0) — breadth-first by design.
+
+## Phase 3 — kill-test queries
+- I1: `temporal link prediction lead-lag network stocks signed directed edges forecasting 2026`
+- I3: `faithfulness explanations graph neural network stock prediction attention weights not explanation finance 2026`
+- I4: `LLM look-ahead bias knowledge graph construction company relationships point-in-time supply chain extraction 2026`
+- I5: `8-K bankruptcy filing contagion graph neural network stock returns linked firms prediction`; `credit rating downgrade spillover peer firms stock returns graph neural network prediction rating actions network 2026`
+- I6: `SEC litigation releases labels pump and dump detection microcap stocks graph co-movement coordinated manipulation`
+- I7: `learned stock graph adjacency compared with true industry supply chain relations does the learned graph reflect economic links`
+- I9: `Chronos-2 covariates selection related series graph context time series foundation model stocks peer selection`
+- I14: `13F common ownership network link prediction institutional holdings future co-holding comovement machine learning` → **killed by arXiv 2607.12067**
+- I13: `predicting future supply chain links between listed firms temporal link prediction 10-K customer disclosures graph neural network`
+- I15: `2026 tariff shock propagation firm network stock returns graph neural network exposure 10-K geopolitical`
+- I16: `structural balance signed stock correlation network early warning crash 2026` → killed by 2608.12023 etc.
+- I12: `forecasting correlation matrix next period generative model graph neural network stocks 2026 conditional`
+- I8: `detecting AI or algorithmic herding in stock comovement networks LLM-driven trading correlation increase empirical 2026`
+- I11: `e-values anytime valid testing lead-lag relationships stocks multiple testing network edges false discovery`
+
+Rejected ideas and why: I8 (cannot identify AI trades in public data), I14 (2607.12067 did it, persistence baseline ~unbeatable), I16 (2026 balance-loss papers), I18 (A11-5 benchmark), I2/I12/I11/I13 merged into stronger cards.
