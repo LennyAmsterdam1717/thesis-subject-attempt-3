@@ -1,6 +1,42 @@
 # Thesis topics: ML × stock market / listed companies (2026 scouting)
 
-<!-- PHASE 4 SUMMARY GOES HERE -->
+## Morning summary (Phase 4)
+
+*Run of 2 November 2026. Literature rule: 2026-only. Sources: ≈60 logged 2026 items across 12 areas, ~50 checked at abstract level (`[ABS]`); no full texts were opened in this breadth-first run, so every number must be checked against the PDF before thesis use. Details: `lit_review_ml_stock_2026.md`; decision log: `NOTES.md`.*
+
+### What the field looks like in 2026
+- **Prediction is saturating, and honest evaluations are turning negative.** Several 2026 papers find that the fancy part adds little once tested properly: cross-stock attention does no better than a per-stock LSTM at 3,500 stocks (Guo, 2609.08106); time-series foundation models barely beat a random walk on returns (2606.27100, 2610.25822); news-text Sharpe ratios stop being significant against price-only baselines (2610.22745); Reddit embeddings mostly encode firm identity (2610.25468, ICAIF '26). This supports the supervisor's view that standard prediction is done.
+- **The busiest 2026 niches:** LLM alpha/factor mining (FactorBench, AlphaRLM, Hubble, FactorMiner …), LLM trading agents and benchmarks, and LLM text signals. **Avoid these.**
+- **Audit and evaluation work is growing fast** (look-ahead in LLMs: DatedGPT; agent audits; anytime-valid factor referees; a leakage-controlled benchmark that already includes stock graphs). A generic "evaluation rigour" thesis is now partly taken. A *specific* audit, such as explanation faithfulness or time-honest graphs, is still open.
+- **Graphs are used as inputs, almost never as targets.** Only one 2026 paper forecasts edges (undirected correlations). No 2026 work forecasts signed, directed, time-activated lead-lag edges on equities, although 2026 methods for dynamic signed link prediction exist (SIGIR 2026, ICLR 2026) and have only been tried on social platforms.
+- **Open gaps relevant to the supervisor:** credit-event contagion into linked firms' equity (no 2026 ML paper found), point-in-time LLM-built company graphs, faithfulness of graph explanations in finance, and network-level manipulation detection in equities.
+
+### The six topics in one paragraph each
+1. **SignFlip: signed lead-lag link prediction (61/70).** Build monthly signed, directed lead-lag graphs from daily S&P 500 returns (optionally AEX) and predict which influence edges switch on, switch off or flip sign next period. Compare persistence and statistical baselines with 2026 dynamic signed-graph methods, evaluate like a temporal-graph benchmark without look-ahead, then test economic value after costs. Hits the supervisor's capitalised point (signed, time-activated edges + time series) and "link prediction!!!!" directly; needs only public prices; existing code: PyG Signed Directed, TGB, IDP-DSN. Main risk: lead-lag edges may be mostly noise. The fallback is sector- or ETF-level graphs.
+2. **Time-honest LLM company graphs (58/70).** Measure how much future knowledge leaks into company graphs that LLMs extract (competitor, supplier, customer), build a point-in-time typed graph from EDGAR 10-Ks, and run temporal heterogeneous link prediction to forecast new relations. Strong fit with her text-analysis and knowledge-network expertise and with Accenture's GenAI work. No 2026 paper tests leakage in LLM-built graphs.
+3. **Do stock-graph explanations explain? (58/70).** A faithfulness audit of edge explanations (attention, GNNExplainer, probing) for temporal stock-graph models. Uses synthetic markets with planted signed influence edges plus real data, and builds on ICLR 2026 evidence that graph explanations can be degenerate yet pass standard metrics. Best match with Frank's XAI/AI Act background; supervisor fit is the open question.
+4. **Credit-event contagion to equity (54/70).** Predict which listed suppliers, customers and competitors react, and in which direction (contagion or competitive gain), when a firm files for bankruptcy (8-K Item 1.03) or is downgraded, using a public EDGAR firm graph and relational GNNs. This is the supervisor's separate "credit default → stock market" problem, and no 2026 ML work on it was found. Risks: small event counts and data assembly.
+5. **Is the learned market graph real? (51/70).** Check whether graphs learned by 2025–26 stock models recover disclosed economic relations, or only sector and size clusters. Easy to carry out, but weakened by a 2026 graphical-model comparison, and the result is likely to be negative.
+6. **Coordinated manipulation detection (49/70).** Temporal-graph anomaly detection of multi-ticker pump-and-dump campaigns in US small caps, with weak labels (tickers and dates only) taken from SEC litigation releases. Novel, and close to her financial-crime work, but price coverage for OTC targets is a serious data risk.
+
+### Overall recommendation
+**Lead with Card 1 (SignFlip).** It is the only topic that hits all of the supervisor's strongest signals at once (temporal, signed, time-activated, link prediction, graph + time series), runs on public data only, has ready-made 2026 methods to transfer, and is clearly not "classification done again". To use Frank's XAI strength, add a **small explanation-reliability chapter from Card 3** (which features and edges drive predicted flips, with sanity checks) rather than making XAI the main topic. Keep **Card 2** as the alternative if the supervisor prefers her text and knowledge-graph side (it also has the best Accenture story), and **Card 4** if she wants the credit-default problem specifically. Cards 5 and 6 are fallbacks.
+
+### Questions for the supervisor
+1. Of the three framings — **signed lead-lag link prediction (1)**, **time-honest LLM company graphs (2)**, **credit-event contagion (4)** — which is closest to what she meant by "edges signed and activated"?
+2. For Card 1: should the target be 3-class signed links, or continuous edge weights and lags? Daily or intraday data?
+3. Does UU give MSc students **WRDS (CRSP/Compustat)** access? That decides survivorship-free prices (Card 1) and customer-segment data (Card 4).
+4. Is an **audit/negative-result** contribution (Cards 3 and 5) acceptable to the examiners at the go/no-go?
+5. Does she consider manipulation detection (Card 6) too close to the crowded financial-crime area she warned about?
+6. Is US-only data acceptable, or does she want a European (AEX/Euronext) component?
+7. Can she share related student projects from the AI & Finance Lab, or her group's tooling (e.g. entity resolution from SPIN)?
+8. Recency: the strict 2026-only rule excludes key 2025 baselines (e.g. DeltaLag, Kronos). Can these be cited as baselines in the proposal?
+
+### Action items for Frank (could not be done here)
+- Google Scholar "cited by" checks for Cards 1–4 (Scholar was blocked).
+- Open full texts of the closest papers per card (all are `[ABS]` now) and verify the numbers.
+- Check the Padova MSc thesis on lead/lag temporal link prediction (date and content) before committing to Card 1.
+- Verify data availability: Stooq/yfinance terms; S&P 500 point-in-time constituents; DatedGPT weights; Rule 17g-7 rating histories; OTC price coverage.
 
 ---
 
