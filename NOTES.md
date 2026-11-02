@@ -122,3 +122,22 @@ Phase 1 complete: 12/12 areas covered (≈70 2026 items, of which ~50 `[ABS]`, r
 - I11: `e-values anytime valid testing lead-lag relationships stocks multiple testing network edges false discovery`
 
 Rejected ideas and why: I8 (cannot identify AI trades in public data), I14 (2607.12067 did it, persistence baseline ~unbeatable), I16 (2026 balance-loss papers), I18 (A11-5 benchmark), I2/I12/I11/I13 merged into stronger cards.
+
+## Phase 4 decisions
+- Recommendation: **Card 1 (SignFlip)** as main topic, with a small explanation-reliability chapter borrowed from Card 3; Card 2 as alternative (text/KG side, Accenture relevance); Card 4 if the supervisor wants credit default specifically.
+- Bib policy: arXiv IDs mentioned only as *excluded* (pre-2026) or as `[UNVERIFIED]` listing titles are deliberately **not** in `references.bib` (29 such IDs). 2025 items used as kill-test evidence or as likely baselines are in the bib as `[BACKGROUND]`.
+
+## Open questions for the supervisor
+See `ml_stock_topics_2026.md` → "Questions for the supervisor" (8 questions) and each card's item 13.
+
+## Unverified leads (to check)
+- Padova MSc thesis: lead/lag detection as temporal link prediction (thesis.unipd.it handle 20.500.12608/81805) — date and content unverified; closest prior art for Card 1.
+- DatedGPT model weights availability (only a web demo confirmed).
+- SEC Rule 17g-7(b) XBRL rating histories — format/access.
+- S&P 500 point-in-time membership source; Stooq/yfinance coverage of OTC tickers.
+- 2610.24544 (TimeGAN Rachev portfolio) — rate-limited, not opened.
+
+## Status / where I stopped (2026-11-02)
+- **Done:** Phase 0 (taxonomy, 12 areas) → Phase 1 (sweep of all 12 areas; ≈60 2026 items logged, ~50 `[ABS]`) → Phase 2 (crowding map + 11 gaps) → Phase 3 (18 raw ideas with kill tests; 6 full cards; 4 runners-up) → Phase 4 (morning summary, recommendation, supervisor questions). All committed and pushed to branch `scouting-ml-stock-2026`.
+- **Not done / limits:** no full texts opened (`[FT]` = 0) — breadth first by design; Google Scholar and arXiv search blocked (logged once, not retried); per-area counts are a sample, not a census; most `[ABS-s]` items should be upgraded to `[ABS]`/`[FT]` before citing in the proposal.
+- **Next session:** (1) after the supervisor picks a direction, open full texts of the 4–6 closest papers for the chosen card; (2) phase-1 literature review for that card, including 2025 baselines if the supervisor allows; (3) data-availability checks (list above); (4) prototype code.
