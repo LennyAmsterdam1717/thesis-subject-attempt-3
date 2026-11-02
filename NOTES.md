@@ -32,10 +32,33 @@ Notes on the taxonomy:
 - A1 and A12 overlap deliberately: A1 = learning *on* graphs, A12 = *building* the graph.
 - Crypto-only papers are out of scope unless the method transfers.
 
-## Access tests
+## Access tests (2026-11-02)
 
-(see below, filled in during Phase 1)
+| Route | Result |
+|---|---|
+| Google Scholar via web fetch | **Blocked** (robots_disallowed). Not retried. Scholar "cited by" checks left for Frank. |
+| arXiv search page (`/search/`) via web fetch | **Blocked** (robots_disallowed). Not retried. |
+| arXiv monthly listing pages (`/list/q-fin.XX/2026-10`) via web fetch | **Works** (summariser may truncate long lists). Used for q-fin.ST, .PM, .CP, .RM, .TR (Oct 2026) and q-fin.ST (Sep 2026). |
+| arXiv abstract pages (`/abs/…`) via web fetch | **Works** — main verification route (`[ABS]`). |
+| Web search | Works; often returns the arXiv abs/HTML page text directly (`[ABS-s]`). |
 
 ## Search queries log
 
-(per area, filled in during Phase 1)
+### A1 Graph & relational
+- `arxiv 2026 graph neural network stock prediction`
+- `arxiv 2026 signed graph stock lead-lag network learning`
+- `arxiv 2026 hypergraph stock temporal graph link prediction company`
+- `2026 arxiv dynamic signed network stock correlation edge sign prediction OR "signed graph" equity`
+- Listings: q-fin.ST 2026-09, 2026-10; q-fin.PM/CP/RM/TR 2026-10.
+
+### A2 TSFMs
+- `2026 arxiv time series foundation model stock returns zero-shot evaluation financial`
+- `2026 financial foundation model pretrained market data Kronos OR "foundation model" equities benchmark arxiv`
+
+### A3 LLM text → signals
+- `2026 arxiv LLM news earnings call stock return prediction look-ahead bias embeddings`
+- `arxiv 2026 large language model 10-K filings OR earnings calls cross-section stock returns signal`
+
+## Phase 1 decisions
+- Papers first posted on arXiv in 2025 but published in a 2026 venue (e.g. Kronos, AAAI 2026) are **excluded** under the strict 2026 rule, or kept only as `[BACKGROUND]` when they are a named library/dataset.
+- Journal papers in 2026 issues with 2025 DOIs (online-first 2025) are excluded.
