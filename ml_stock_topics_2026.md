@@ -72,3 +72,39 @@ Scoring (briefing §9): Novelty ×3, Supervisor fit ×2, Data ×2, Feasibility �
 **12. Scores.** Novelty 4 (×3=12) · Fit 5 (×2=10) · Data 5 (×2=10) · Feasibility 4 (×2=8) · Evaluation 5 · AI relevance 5 · Artefact 4 · Industry 3 · Frank's interests 4 → **61 / 70**.
 
 **13. Questions for the supervisor.** Is a 3-class signed link-prediction framing acceptable, or does she prefer a continuous edge-weight target? Daily or intraday lead-lag? Does UU have WRDS/CRSP access for survivorship-free prices? Would she accept the Padova thesis as "prior art" to beat?
+
+### Card 2 — Time-honest company graphs: measuring and removing look-ahead in LLM-built firm-relation graphs, then forecasting new edges *(I4 + I13)*
+
+**1. Pitch.** In 2026 LLMs started building company graphs (competitor, supplier, partner) from 10-Ks and the web — but a modern LLM already "knows" which relations formed later. This thesis measures that leakage, builds a point-in-time typed company graph from EDGAR, and uses it for temporal link prediction of new relations.
+
+**2. Research question.** How much future information leaks into company-relation graphs extracted by LLMs, and does a point-in-time (date-restricted) extraction change downstream conclusions about predicting new inter-firm relations and their market relevance?
+- SQ1: Does a frontier LLM, asked only for "relations of firm X as of year t" (no document), recall relations first disclosed after t? (date-only recall probe, adapted from the lookahead-test idea)
+- SQ2: How do graphs from (a) model memory, (b) document-grounded extraction from 10-Ks filed ≤ t, (c) date-cutoff LMs differ in edge precision against 10-K disclosed customers/competitors?
+- SQ3: Can temporal heterogeneous link prediction forecast next-year typed edges, and do leaked graphs inflate its scores?
+
+**3. Supervisor directions hit.** Link prediction ✔ · heterogeneous (typed edges: supplier, customer, competitor, partner) ✔ · temporal ✔ · text analysis & knowledge networks ✔ (her expertise) · time series ◐ (market relevance test).
+
+**4. Closest 2026 work and the difference.**
+- A1-4 Huang et al. (2604.19476) `[ABS]`: LLM types edges of a 10-K similarity graph — no leakage check, annual static graph, no edge prediction.
+- A12-1 Fukada & Mizuno (2605.27845) `[ABS-s]`: LLM supply-chain KG from search snippets (China) — snapshot, no time honesty.
+- Köse et al. (2605.15842) `[ABS-s]` — temporal multi-relational semiconductor network from web archives with LLM extraction; validates precision, but does not test LLM memory leakage and does not do link prediction.
+- A3-3 DatedGPT (2603.11838) `[ABS]` and A3-7 time-capsule checkpoints `[ABS]`: tools and evidence that LLM knowledge cutoffs matter for *returns* — not yet applied to *graph construction*.
+- Evidence outside 2026: FinNLP 2025 zero-shot LLM relation graphs built purely from model memory (exactly the leak-prone design).
+
+**5. Kill test.** Queries in NOTES.md (I4, I13). No work found that quantifies look-ahead in LLM-extracted firm graphs. Supply-chain link prediction itself is done in 2025 (GDES 2508.12044; Leskovec TPG, AAAI 2025) on proprietary/Chinese data → the novelty is the **time-honesty angle + public EDGAR data**, not link prediction alone. → **Survived.**
+
+**6. Data.** SEC EDGAR 10-K Item 1 / Item 1A text, and 10-K customer disclosures (major-customer mentions) — free, bulk; EDGAR full-text search for validation. Wikidata (owned-by, industry) as weak ground truth. Date-cutoff models: DatedGPT checkpoints (availability of weights **unverified**; demo at datedgpt.com) or older open models with known cutoffs (e.g. FinBERT-era). Access risk: **low–medium** (LLM API costs for extraction; few-thousand-firm scale is cheap).
+
+**7. Method sketch.** (i) Universe ≈ 500–1,500 US firms, 2012–2025. (ii) Three graph builders: memory-only prompting; RAG over 10-Ks filed ≤ t (point-in-time); date-cutoff LM. (iii) Leakage score per edge = was it recalled before its first disclosure date? (iv) Temporal heterogeneous link prediction (R-GCN / HGT with time snapshots in PyG; TGB-style evaluation) trained on each graph version. (v) Market relevance: does a newly predicted supplier/customer edge forecast increased return co-movement? (cross-check with Card 1 machinery).
+
+**8. Baselines & evaluation.** Edge precision/recall against 10-K-disclosed relations (hand-checked sample of 200 edges for gold). Link prediction: MRR/Hits@k on year t+1 edges, chronological split, filtered negatives; baselines: common neighbours, Adamic-Adar, persistence. Key comparison: inflated score with leaked graph vs point-in-time graph.
+
+**9. Artefact.** "Time-honest company graph explorer": pick a date, see the graph as knowable at that date, with each edge's source sentence and first-disclosure date; flagged edges where the LLM "knew too early".
+
+**10. Feasibility.** Medium. Weeks 1–8 lit + EDGAR pipeline (edgartools / sec-edgar libraries); 9–16 extraction + leakage probes; 17–23 link prediction; 24–30 artefact + writing. Risks: entity resolution of firm names; LLM cost; noisy ground truth. Fallback: restrict to one sector (e.g. semiconductors, where Köse et al. offer a comparison) and to the leakage study (SQ1–2) only.
+
+**11. Ethics.** Firms only; no executives. LLM use disclosed; no proprietary data. Note LLM provider terms for research use.
+
+**12. Scores.** Novelty 4 (12) · Fit 5 (10) · Data 4 (8) · Feasibility 3 (6) · Evaluation 4 · AI relevance 5 · Artefact 4 · Industry 5 (Accenture GenAI/knowledge-graph work) · Interests 4 → **58 / 70**.
+
+**13. Questions for the supervisor.** Is the leakage measurement a strong enough contribution even if link prediction is modest? Does her group have entity-resolution tooling from the ING/SPIN work? Preference for RAG over raw filings vs prompting?
