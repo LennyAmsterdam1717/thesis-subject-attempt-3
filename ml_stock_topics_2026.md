@@ -108,3 +108,39 @@ Scoring (briefing §9): Novelty ×3, Supervisor fit ×2, Data ×2, Feasibility �
 **12. Scores.** Novelty 4 (12) · Fit 5 (10) · Data 4 (8) · Feasibility 3 (6) · Evaluation 4 · AI relevance 5 · Artefact 4 · Industry 5 (Accenture GenAI/knowledge-graph work) · Interests 4 → **58 / 70**.
 
 **13. Questions for the supervisor.** Is the leakage measurement a strong enough contribution even if link prediction is modest? Does her group have entity-resolution tooling from the ING/SPIN work? Preference for RAG over raw filings vs prompting?
+
+### Card 3 — Do stock-graph explanations explain? A faithfulness audit of temporal graph models for markets *(I3)*
+
+**1. Pitch.** Stock-graph papers routinely show attention maps and "important neighbours" as explanations. 2026 graph-XAI research shows such explanations can be degenerate yet pass standard faithfulness metrics. This thesis builds a controlled audit for temporal stock-graph models: synthetic markets with planted influence edges plus real data, testing whether explanations recover the edges the model actually uses.
+
+**2. Research question.** Are edge-level explanations of temporal stock-graph models (attention weights, GNNExplainer-type masks, probing) faithful to the model and to the true influence structure?
+- SQ1: In synthetic markets with planted signed lead-lag edges, which explanation methods recover the planted edges, and which faithfulness metrics detect when they do not?
+- SQ2: On real data (S&P 500, optionally AEX), do explanations agree across seeds, methods and adjacent time windows?
+- SQ3: Can a cheap "explanation sanity check" be proposed for analysts (an AI-Act-style transparency test)?
+
+**3. Supervisor directions hit.** Temporal ✔ · graph + time series ✔ · signed influence (planted edges) ✔ · anomaly ◐ (explanation instability as a warning) · link prediction ✘. Fit with Frank's XAI/AI-Act background ✔✔.
+
+**4. Closest 2026 work and the difference.**
+- A10-4 Azzolin et al. (ICLR 2026, arXiv 2601.20815) `[ABS-s]`: unfaithful-but-undetected explanations in self-explainable GNNs; new metric — general benchmarks, not temporal, not finance.
+- A10-1 Liang, Zohren & Cucuringu (2610.15144) `[ABS]`: feature attribution for ML portfolios — features, not edges; no faithfulness test.
+- A10-3 RegimeRank (2610.26456, ICAIF 2026) `[ABS]` and A12-2 TRACE (2603.12500) `[ABS]`: present attention/evidence chains as explanations, unvalidated.
+- A8-4 Causal-INSIGHT (2603.25473, IJCNN 2026) `[ABS-s]`: probing a trained temporal predictor for the graph it uses — a candidate method to audit.
+- A1-5 Guo (2609.08106) `[ABS]`: MASTER inter-stock attention is nearly uniform → a concrete case where attention-as-explanation is doubtful.
+
+**5. Kill test.** Queries in NOTES.md (I3). No finance-specific faithfulness study of graph explanations found (2026 or earlier in results). → **Survived.**
+
+**6. Data.** Synthetic: simulated returns with planted signed lead-lag graph (Card 1 generator; or VAR with sparse signed coefficients). Real: S&P 500 daily prices (Stooq/yfinance) + sector codes. Access risk: **low**.
+
+**7. Method sketch.** Models: GAT-based temporal model, MASTER-style inter-stock attention (official code exists for MASTER `[BACKGROUND]`, to check), a simple temporal GCN. Explainers: attention, GNNExplainer/PGExplainer (PyG `torch_geometric.explain`), integrated gradients on edge masks, Causal-INSIGHT-style clamping. Metrics: fidelity+/−, Azzolin et al.'s metric, planted-edge recall, stability (Jaccard across seeds/windows).
+
+**8. Evaluation.** Ground truth exists in synthetic data → precision/recall of explanations; on real data, agreement/stability metrics + sanity checks (randomised-model test, label-shuffle test). Chronological splits for real-data models.
+
+**9. Artefact.** "Explanation reliability panel" for an analyst view: for each prediction, the explanation + a reliability badge (passes/fails sanity checks).
+
+**10. Feasibility.** Good — mostly existing libraries. Weeks 1–8 lit; 9–14 simulator + models; 15–22 explainers + metrics; 23–30 real data, artefact, writing. Risk: result could be "all explainers fail" — still publishable as an audit. Fallback: synthetic-only plus one real dataset.
+
+**11. Ethics.** No personal data. Strong link to AI Act transparency for high-risk/financial uses — discuss carefully (stock prediction itself is not an AI-Act high-risk category; frame as good practice).
+
+**12. Scores.** Novelty 4 (12) · Fit 3 (6) · Data 5 (10) · Feasibility 4 (8) · Evaluation 4 · AI relevance 5 · Artefact 4 · Industry 4 · Interests 5 → **58 / 70**.
+
+**13. Questions for the supervisor.** Is an XAI-audit thesis "network analysis" enough for her? Would she co-supervise with an XAI person (e.g. UU's explainability group)? Synthetic-heavy design acceptable?
