@@ -90,3 +90,17 @@ Notes on the taxonomy:
 - `2026 arxiv regime change detection correlation network stock market early warning crash machine learning`
 - `arxiv 2026 corporate bankruptcy announcement spillover stock returns customers suppliers network learning`
 - Finding: no 2026 ML paper on default → equity contagion over firm networks (gap signal, see crowding map).
+
+### A10 XAI
+- listing scan q-fin.PM/TR/CP 2026-10
+- `2026 explainable graph neural network stock explanation faithfulness financial forecasting arxiv`
+
+### A11 Evaluation
+- listing scan q-fin.ST 2026-09/10
+- `2026 reproducibility study stock movement prediction deep learning benchmarks leakage survivorship bias re-evaluation`
+
+### A12 Company KGs
+- `2026 LLM extraction company relationships supply chain knowledge graph SEC filings temporal knowledge graph finance arxiv`
+- `2026 temporal knowledge graph link prediction companies financial events OR "company relation" prediction graph neural network arxiv`
+
+Phase 1 complete: 12/12 areas covered (≈70 2026 items, of which ~50 `[ABS]`, rest `[ABS-s]`/`[UNVERIFIED]`). No full texts opened in this run (`[FT]` = 0) — breadth-first by design.

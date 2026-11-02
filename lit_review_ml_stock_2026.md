@@ -244,3 +244,59 @@ Pre-2026 background: DeltaLag (2511.00390), CausalStock (2411.06391), Cucuringu 
 
 Credit → equity search outcome: **no 2026 ML paper found** that learns how defaults/bankruptcies propagate to linked firms' *equity*. Finance evidence on bankruptcy/downgrade spillovers along supply chains is older event-study work (e.g. Kolay, Lemmon & Tashjian, JFQA 2016 `[BACKGROUND]`). SME credit-GNN work (2510.09407) is 2025 and uses private bank data. Systemic Risk Radar (2512.17185) is Dec 2025 → excluded.
 Low-quality 2026 items seen and ignored: 2607.04184 (QPAIN 2026 manipulation), JEFAS 2026 "AI-driven" manipulation blueprint (no experiments).
+
+## A10. Explainability & interpretability
+
+**A10-1. Liang, Zohren & Cucuringu — *From Economic Explanation to Performance Improvement in Machine-Learning Portfolios*.** <https://arxiv.org/abs/2610.15144> · 2026-10-10 · pre (q-fin.PM) · `[ABS]`
+- Summary: local attribution links input features to sequential Sharpe-ratio metrics of an ML allocator, then adjusts feature exposures *after training* (no retraining), with temporal stabilisation and cross-model averaging; includes inference for Sharpe attributions.
+- Leaves open: attribution over **edges/relations** (graph inputs) rather than features; first-order approximation only.
+
+**A10-2. Mohl et al. — *Understanding the Inner Workings of a State-Space Foundation Model for Limit Order Books*.** <https://arxiv.org/abs/2610.28753> · 2026-10-20 · PR (ICAIF '26) · `[ABS]`
+- Summary: probing and steering a Mamba-3 LOB foundation model; internal state encodes order-flow imbalance (R²≈0.59), transfers to unseen stocks, can be steered. Mechanistic interpretability arrives in finance.
+- Leaves open: same questions for daily cross-sectional / graph models on public data.
+
+**A10-3. Koa et al. — *Regime-Aware Interpretable Ranking for Sector Rotation* (RegimeRank).** <https://arxiv.org/abs/2610.26456> · 2026-10-19 · PR (ICAIF 2026 oral) · `[ABS]`
+- Summary: ranks S&P 500 sectors by expected forward active Sharpe with macro-regime cross-attention and cross-sector self-attention; attribution + attention maps as explanations; combinatorial purged CV.
+- Leaves open: explanations are not validated for faithfulness.
+
+**A10-4 (method, not finance). Azzolin, Teso, Lepri, Passerini & Malhotra — *GNN Explanations that do not Explain and How to find Them*.** ICLR 2026. Record: <https://repositum.tuwien.at/handle/20.500.12708/229326> · PR · `[ABS-s]`
+- Summary: self-explainable GNNs can reach optimal risk with degenerate explanations, and most faithfulness metrics miss this; proposes a new faithfulness metric.
+- Relevance: directly undermines "interpretable attention/edge weights" claims in stock-graph papers (e.g. A1-2, A10-3, A12-2) — **nobody has applied this check to financial graphs** in what was found.
+
+Also via A8-4 (Causal-INSIGHT): probing which graph a predictor actually uses. Not opened: 2610.03076 (Shapley analysis of neural SV calibration) `[UNVERIFIED]`.
+Search outcome: no 2026 paper found that evaluates the **faithfulness** of explanations for temporal stock/company graph models.
+
+## A11. Evaluation methodology, leakage & look-ahead bias (cross-cutting)
+
+**A11-1. Vidovich & Zerjal — *Where Backtests and Live Trading Part Ways: Six Defects from One Intraday System*.** <https://arxiv.org/abs/2610.21846> · 2026-10-15 · pre (q-fin.ST) · `[ABS]`
+- Summary: live vs replayed-backtest comparison of one intraday US equity system; six defects (data handling, code, configuration); 10-point checklist.
+
+**A11-2. Li — *The Impossible Trinity of Time-Series Validation*.** <https://arxiv.org/abs/2609.29530> · 2026-09-02 · pre (cs.LG) · `[ABS]`
+- Summary: no validation scheme maximises training size, test coverage and temporal causality at once; leakage harm depends on proximity of future data, not amount; purging+embargo cannot fix non-stationarity.
+
+**A11-3. Ye — *Can You Delete a Year of Market Data? Machine Unlearning Against Exact Retraining Oracles*.** <https://arxiv.org/abs/2609.26242> · 2026-08-13 · pre (cs.LG) · `[ABS]`
+- Summary: unlearning a year of S&P 500 volatility data vs retrain oracles; deleting 2020 helps most; notes pseudo-replication inflates t-stats ~1.9×.
+
+**A11-4. Saidd — *A Controlled Comparison of Deep Learning Architectures for Multi-Horizon Financial Forecasting: Evidence from 918 Experiments*.** <https://arxiv.org/abs/2603.16886> · 2026-02-27 · pre (q-fin.ST) · `[ABS-s]`
+- Summary: nine architectures, three asset classes, controlled HPO budgets, multi-seed, pairwise corrected tests.
+
+**A11-5. Ltifi (repo owner) — *Auditing Multi-Source Stock Prediction: An Evaluation Protocol and Benchmark*.** Zenodo software record v1.0.17, 2026-07-26 <https://zenodo.org/records/21592983>; code <https://github.com/mouadhltifi/leakage-controlled-benchmark> · software, not peer-reviewed · `[ABS-s]`
+- Summary: availability-timed (release-lag aligned) features for 55 US large caps 2015–2023 incl. **inter-stock graphs**, news, social, macro; audits that price protocol violations (test-set model selection, non-temporal splits).
+- **Important for kill tests**: a leakage-controlled benchmark that already includes stock graphs exists (small universe, next-day prediction).
+
+Also counted here (entries above): NoLBERT (A3-1), DatedGPT (A3-3), Reddit identity leakage (A3-2), Nyström/MASTER (A1-5), agent audit (A4-2), anytime-valid referee (A6-3), FactorBench (A6-1), TSFM return studies (A2-1, A2-3).
+Excluded: FINSABER (2505.07078, KDD 2026, first posted 2025); *Leakage-Safe Benchmark Design for Market-Stress Early Warning* (Preprints.org 2026-03, not opened, `[UNVERIFIED]`); Bologna MSc thesis (2026-07) on leakage in StockMixer/xLSTM-ts — student work, signal only.
+
+## A12. Company knowledge graphs & relation extraction
+
+**A12-1. Fukada & Mizuno — *Snippet-Driven Supply Chain Discovery with LLMs: Scaling Visibility in China*.** <https://arxiv.org/abs/2605.27845> · 2026-05-27 · pre (cs.SI) · `[ABS-s]`
+- Summary: LLM relation extraction from web-search snippets to build a supply-chain KG for 130k Chinese firms; 7.2× more firms and 9.3× more relations than CSMAR disclosures for listed firms; keeps provenance.
+- Leaves open: KG is a static snapshot; no temporal validity, no downstream market test, no link prediction.
+
+**A12-2. Ding et al. — *TRACE: Temporal Rule-Anchored Chain-of-Evidence on Knowledge Graphs for Interpretable Stock Movement Prediction*.** <https://arxiv.org/abs/2603.12500> · 2026-03-12 · pre (cs.CE) · `[ABS]`
+- Summary: rule-restricted multi-hop paths over a temporal KG, linked to news, aggregated by an LLM into UP/DOWN calls with readable evidence chains; 55.1% accuracy on an S&P 500 benchmark.
+- Leaves open: KG construction undocumented; target is still direction classification; explanation faithfulness untested.
+
+**A12-3 = A1-4** (LLM edge typing of 10-K similarity graph), **A3-4** (10-K KG for sentiment), **A3-5** (supply-chain KG propagation of text signals) — all *use* firm graphs as input; none treats the graph itself (its future edges) as the prediction target.
+
+Borderline/excluded: Jackson, Saénz, Ivanov & Ma, *Supply chain mapping through retrieval-augmented generation* (J. Operational Research Society, issued online 2025-12-19 per MIT record) → 2025, excluded; method (RAG over 10-K + earnings calls → directed supply-chain graph, 4,644 nodes) is a useful template. *Predictive AI with External Knowledge Infusion* (2504.20058, v2 Feb 2026; first posted 2025) → excluded; builds temporal KGs for NSE/NASDAQ. InterCorpRel-LLM (2510.09735, 2025; FactSet = paid). FinKGR (SJSU MSc project, 2026) does TKG link prediction on financial news KGs — student work, signal that **temporal link prediction on financial KGs is thesis-sized**.
