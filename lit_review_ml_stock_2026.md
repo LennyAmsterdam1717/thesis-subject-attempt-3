@@ -185,3 +185,62 @@ Crowding note: live LLM-trading benchmarks proliferated in late 2025 (Agent Mark
 
 Also seen in listings, not opened (`[UNVERIFIED]`): AlphaPADI (2610.04959, diffusion for formulaic alphas), EverMine (2609.33524, long-horizon alpha research agents), Residual Learning in Empirical Asset Pricing (2610.09613). Background-era AAAI 2026 papers first posted 2025 (Alpha Jungle MCTS, 2505.11122) excluded.
 Crowding: **LLM alpha mining is one of the most crowded 2026 niches** (≥9 papers found in one sweep, heavy Chinese-market/Qlib focus).
+
+## A7. Generative models & market simulation
+
+**A7-1. Marti — *CorrFlow: Exact and Permutation-Equivariant Flow Matching on the Correlation Elliptope*.** <https://arxiv.org/abs/2610.13606> · 2026-10-09 · pre (stat.ML/q-fin.RM) · `[ABS]`
+- Summary: generalised Fisher transform maps correlation matrices to unconstrained space; permutation-equivariant graph flow matching learns their distribution; always-valid outputs. Data: 80×80 Taiwan equity correlation matrices.
+- Leaves open: *conditional/temporal* generation of correlation networks (e.g. next-month network given today's) — generation of signed market graphs as a forecasting tool. Authors say no clear win over tuned image models.
+
+**A7-2. Nigmatulin, Mohl, Frey, Li, Marti-Shahandeh, Cucuringu, Calinescu, Foerster & Zohren — *LOB-Impact Benchmark: Emergent Market Impact in Generative Limit Order Book Models*.** <https://arxiv.org/abs/2610.27100> · 2026-10-19 · PR (ICAIF '26) · `[ABS]`
+- Summary: tests whether autoregressive message-level LOB generators reproduce market impact when metaorders are injected; five NASDAQ stocks, five models. Code: <https://github.com/george-nigmatulin/lob-impact>.
+- Leaves open: needs LOB message data (LOBSTER — paid/academic) → outside Frank's public-data constraint.
+
+**A7-3. Masi, Coletta & Bartolini — *High-Quality Synthetic Financial Time-Series using a GAN-Diffusion Framework* (CoMeTS-GAN).** <https://arxiv.org/abs/2605.27113> · 2026-05-26 · pre (cs.LG) · `[ABS]`
+- Summary: conditional GAN generating mid-price and volume for correlated stocks; critic guides a diffusion model to preserve cross-asset correlation; supports counterfactual shocks that propagate to correlated assets.
+- Leaves open: counterfactual propagation is only correlation-based, not causal.
+
+**A7-4. Fukunishi, Qiu & Takahashi — *Generating Synthetic Stock Return Distributions with Diffusion Models*.** CARF Working Paper F-627 / CIRJE F-1273, Univ. of Tokyo, 2026-05. <https://ideas.repec.org/p/cfi/fseres/cf627.html> · working paper · `[ABS-s]` (RePEc record)
+- Summary: diffusion model tailored to return distributions, extended to regime-conditional generation.
+
+Not opened (rate-limited, `[UNVERIFIED]`): 2610.24544 *Rachev-Ratio Portfolio Optimization with TimeGAN Scenarios*; 2610.16732 GROMM (options). Pre-2026: Diffusion Factor Models (2504.06566), CorrGAN (Marti 2020) → background only.
+
+## A8. Causal ML, lead-lag & spillover networks
+
+**A8-1. Deng & Zhang — *Lead-Lag Relationships in Financial Markets: A Comparison of Multiple Clustering Algorithms*.** <https://arxiv.org/abs/2608.24703> · 2026-08-25 · pre (q-fin.ST) · `[ABS]`
+- Summary: compares MiniRocket-KMeans, KShape and an ensemble against DTW-KMedoids for clustering stocks by lead-lag; evaluates via lead-lag trading strategy (best max drawdown −63.9%).
+- Leaves open: lead-lag *networks* are still built by unsupervised statistics; no learned/forecast lead-lag edges, no sign dynamics.
+
+**A8-2. Duong, Moneta, Lillo, Giannetti & Nguyen — *Contemporaneous Transmission Networks and Systemic Risk in European Banking*.** <https://arxiv.org/abs/2610.37487> · 2026-10-27 · pre (q-fin.ST) · `[ABS]`
+- Summary: recursive non-Gaussian (LiNGAM-type) network of daily equity-return shocks among 51 listed European banks; systemic-impact and vulnerability scores. Receiving roles more reproducible than transmitting roles.
+- Leaves open: European listed firms beyond banks; temporal stability of causal edges; link to ML.
+
+**A8-3. Thumm & Chen — *Market Impact Estimation via Causal Foundation Models*.** <https://arxiv.org/abs/2610.12537> · 2026-10-08 · pre (cs.LG) · `[ABS]`
+- Summary: causal prior-data fitted network trained on synthetic markets with hidden confounders; transfers zero-shot to LOB simulations and real flow bursts (crypto perps, ~3,800 Nasdaq equity bursts). Proof of concept.
+- Leaves open: **causal foundation models (PFNs) for other financial causal questions**, e.g. spillover estimation between firms.
+
+**A8-4 (method, not finance-specific). Redden, Wang & Li — *Causal-INSIGHT: Probing Temporal Models to Extract Causal Structure*.** <https://arxiv.org/abs/2603.25473> · 2026-03-26 · PR (IJCNN 2026, per page) · `[ABS-s]`
+- Summary: model-agnostic probing (input clamping) of a trained temporal predictor to recover the directed Granger-style dependency graph it relies on.
+- Relevance: tool to ask "what graph does a stock forecaster actually use?" — links A8 and A10.
+
+Seen, not relied on: *Surpassing stock market's noise-nonstationarity tradeoff by causal-based domain discovery* (Xu et al., Quantitative Finance 26(4), 2026; online date unknown) `[UNVERIFIED]`; 2610.19428 *Common Signals, Spurious Cross-Excitation, and Identification in Multivariate Hawkes Processes* (listing only) `[UNVERIFIED]`. A Princeton senior thesis (2026-04) compares linear vs neural Granger networks on 20 US assets — not peer-reviewed, noted as a signal that the question is student-sized.
+Pre-2026 background: DeltaLag (2511.00390), CausalStock (2411.06391), Cucuringu lead-lag clustering line.
+
+## A9. Anomaly, regime & risk (incl. credit/default contagion)
+
+**A9-1. Chen & Hybinette — *Velocity- and Regime-Aware Detection of Intraday Options Market Manipulation, with Explainable Attribution*.** <https://arxiv.org/abs/2608.05373> · 2026-08-05 · pre (q-fin.TR) · `[ABS]`
+- Summary: minute-level detector based on the velocity of market state; HMM regime conditioning hurts; a pump-reversal *shape* score transfers to US small caps. **Labels from public enforcement records** (Indian regulator order; SEC v. Patel complaint). Exact SHAP attribution per alert.
+- Leaves open: tiny label sets (10 days); single-asset detection — no cross-stock / network view of coordinated manipulation in equities. Authors themselves suggest graph-based detection as future work.
+
+**A9-2. Kriuk & Kriuk — *ORCA — Online Regime Correlation Analyzer*.** <https://arxiv.org/abs/2604.17251> · 2026-04-19 · pre (cs.CE) · `[ABS]`
+- Summary: 127 spectral/topological features of rolling correlation networks (24 ETFs) + price features → Random Forest for 10-day rally/crash probability; walk-forward with anti-leakage gaps; topology features add ~10pp AUC for crashes.
+- Leaves open: no learned graph model; 24 instruments only; no sign structure.
+
+**A9-3. *Fraud Detection in Cryptocurrency Markets with Spatio-Temporal Graph Neural Networks*.** <https://arxiv.org/abs/2604.24590> · 2026-04-27 · pre · `[ABS-s]` (via aggregator; authors not verified)
+- Summary: three ways to build hourly market graphs; ST-GNN detects pump-and-dump better than per-asset baselines. Crypto-only → **method transfers** to equity micro-caps.
+
+**A9-4. Brogaard & Chen — *The Network Foundations of Credit Counterparty Risk: Theory and Evidence*.** Working paper (SMU conference, 2026-06). `[UNVERIFIED]` (PDF seen in search only; first-public date unclear; uses CDS = paid data)
+- Summary: production-network model; GNN shows supply-chain topology improves CDS-spread prediction.
+
+Credit → equity search outcome: **no 2026 ML paper found** that learns how defaults/bankruptcies propagate to linked firms' *equity*. Finance evidence on bankruptcy/downgrade spillovers along supply chains is older event-study work (e.g. Kolay, Lemmon & Tashjian, JFQA 2016 `[BACKGROUND]`). SME credit-GNN work (2510.09407) is 2025 and uses private bank data. Systemic Risk Radar (2512.17185) is Dec 2025 → excluded.
+Low-quality 2026 items seen and ignored: 2607.04184 (QPAIN 2026 manipulation), JEFAS 2026 "AI-driven" manipulation blueprint (no experiments).

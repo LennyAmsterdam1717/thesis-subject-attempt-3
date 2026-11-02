@@ -74,3 +74,19 @@ Notes on the taxonomy:
 ### A6 Alpha / asset pricing
 - listing scan q-fin.PM/CP 2026-10, q-fin.ST 2026-09
 - `2026 arxiv LLM formulaic alpha factor mining agent`
+
+### A7 Generative
+- listing scan q-fin.RM/TR 2026-10
+- `2026 arxiv diffusion model synthetic stock returns generation multivariate equity scenario`
+- Rate-limit hit on arXiv when fetching 3+ abs pages in parallel → now fetching ≤2 at a time. 2610.24544 not opened (rate-limited twice; skipped).
+
+### A8 Causal / lead-lag
+- `2026 arxiv causal discovery stock returns network Granger transfer entropy neural`
+- `2026 arxiv lead-lag detection equities deep learning cross-asset predictability`
+
+### A9 Anomaly / regime / credit
+- `2026 graph neural network credit default contagion supply chain bankruptcy prediction listed firms`
+- `2026 arxiv market manipulation detection pump and dump stocks machine learning OR graph anomaly detection equities`
+- `2026 arxiv regime change detection correlation network stock market early warning crash machine learning`
+- `arxiv 2026 corporate bankruptcy announcement spillover stock returns customers suppliers network learning`
+- Finding: no 2026 ML paper on default → equity contagion over firm networks (gap signal, see crowding map).
