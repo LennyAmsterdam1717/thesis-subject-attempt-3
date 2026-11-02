@@ -6,7 +6,53 @@
 All numbers below are as reported in the abstract; check against the PDF before thesis use.
 Date = arXiv v1 date unless stated. "PR" = peer-reviewed, "pre" = preprint.
 
-<!-- CROWDING MAP (Phase 2) goes here -->
+## Crowding map (Phase 2)
+
+**How to read the counts.** "Found" = distinct 2026 items this single sweep surfaced and logged (opened `[ABS]` + `[ABS-s]`; `[UNVERIFIED]` in brackets). It is a *sample* from ~2 searches + arXiv October listings per area, not a census — arXiv q-fin alone posted ~250 papers in October 2026. Use the counts comparatively, together with the qualitative signals (how easily papers turned up, how similar they were, how many 2025 papers had to be excluded).
+
+| Area | Found 2026 (+unverified) | Dominant venues / benchmarks | Crowding | Recurring weaknesses seen | Open gaps (→ ideas) |
+|---|---|---|---|---|---|
+| A1 Graph & relational | 8 (incl. 2 general signed-graph methods) | arXiv cs.LG/q-fin; S&P 500, CSI, NASDAQ/NYSE (Feng 2019) benchmarks; return/Sharpe metrics | **High** for return prediction; **low** for graph-as-target | Unnamed datasets, no code, learned graphs never validated; A1-5 shows cross-stock modules give **no gain at 3,500 stocks** | G1 forecast/sign-flip of edges; G6 is the learned graph meaningful? |
+| A2 TSFMs | 4 (+Kronos bg) | Chronos-2, TimesFM, Moirai, Kronos; random-walk baseline; DM tests | Medium, rising | 5–56 assets only; univariate; gains small/insignificant | G8 graph-guided context selection for TSFMs |
+| A3 LLM text → signals | 7 | q-fin.ST/GN, ICAIF; 10-K, news, WSB; Fama–MacBeth | **High** | Look-ahead via LLM memorisation; firm-identity leakage (A3-2); short post-cutoff test windows | G3 point-in-time LLM-built graphs |
+| A4 LLM agents | 5 (+2) | cs.AI/MA; live arenas (mostly 2025: AMA, LiveTradeBench, AI-Trader) | **High** (benchmarks saturating) | Few assets, months-long windows, crypto-heavy; returns confounded with market exposure (A4-2) | G7 empirical detection of AI-agent herding; graph-blind agents (A4-5) |
+| A5 RL | 6 | q-fin.PM; FinRL-style; industry portfolios | Medium-high, low novelty | Tiny test windows (22 months), synthetic markets, RL ≈ no gain over simpler allocators (A5-2) | — (weak fit) |
+| A6 Alpha/factor mining | 6 (+3) | Qlib, CSI300/500/1000; FactorBench now exists | **Very high** | China-heavy, after-cost results rare, multiple-testing ignored except A6-3 | — (avoid) |
+| A7 Generative / simulation | 4 (+2) | LOBSTER (paid), ABIDES; Taiwan correlation matrices | Medium | Hard-to-get data; evaluation of "realism" ad hoc | G11 conditional generation of future correlation networks |
+| A8 Causal / lead-lag | 4 (+2) | q-fin.ST, econ.EM; Cucuringu/Zohren (Oxford) line; S&P 500 | **Low–medium** | Unsupervised statistics only; no forecasting of lead-lag edges; reproducibility of "transmitter" roles low (A8-2) | G1 (directed/signed variant), G10 testing edges |
+| A9 Anomaly / regime / credit | 3 (+1); **credit→equity: 0** | ICAIF, q-fin.TR; regulator/SEC labels; ETFs | **Low** (equity manipulation, credit contagion) | Tiny label sets; single-asset detectors; crypto-only GNN work | G4 credit-event propagation; G5 network manipulation detection |
+| A10 XAI | 4 | ICAIF 2026 (two orals/papers), ICLR 2026 (general) | **Low** for graph models in finance | Explanations shown, never tested for faithfulness | G2 faithfulness of stock-graph explanations |
+| A11 Evaluation / leakage | 5 (+ ~10 cross-refs) | q-fin.ST; Zenodo benchmark (A11-5) | Medium, growing fast | — (this *is* the critique literature) | G1/G2 need leak-free protocols; A11-5 partly closes "re-evaluate stock-graph SOTA" |
+| A12 Company KGs | 2 (+3 cross) | cs.SI/CE; 10-K, web snippets, CSMAR (paid, China) | **Low** for *temporal* KG + link prediction | Static snapshots, undocumented KG construction, no edge-level ground truth | G3, G1 (typed edges), G9 Europe |
+
+### Dominant patterns in 2026
+1. **The prediction race is saturating and turning negative.** Several 2026 papers report that the fancy component does not help once evaluation is honest: cross-stock attention ≈ per-stock LSTM at scale (A1-5); TSFMs barely beat a random walk (A2-1, A2-3); text-based Sharpe vanishes vs price-only after search correction (A3-1); WSB embeddings mostly encode firm identity (A3-2); RL adds nothing over LLM allocator (A5-2); no factor-mining paradigm wins (A6-1). This matches the supervisor's view.
+2. **The critique / audit literature is the fast-growing niche** (A11, A4-2, A6-3, DatedGPT). It is now crowded enough that a *generic* "evaluation rigour" thesis needs a specific angle.
+3. **Graphs are used as inputs, almost never as outputs.** Out of ~25 graph-related items, only A1-1 forecasts edges (correlations), and nobody forecasts **signed, directed, time-activated edges** or evaluates against a temporal-graph-benchmark-style protocol. General 2026 methods for dynamic signed link prediction exist (A1-7, A1-8) but are untested on market networks.
+4. **Interpretability is claimed, not tested.** ICAIF 2026 has interpretable-ranking and mechanistic-interp papers, but faithfulness tests for financial graph explanations (cf. A10-4) are missing.
+5. **LLMs as graph builders** (A1-4, A3-4, A3-5, A12-1) are new in 2026 and nobody has solved the **point-in-time** problem (the LLM knows the future of the relation). DatedGPT (A3-3) and checkpoint-dated LLMs (A3-7) provide the tools.
+6. **Credit-to-equity contagion with ML on public data is essentially absent in 2026**, despite a solid (older) finance literature on supplier/customer spillovers.
+
+### Recurring weaknesses (counted over the ~50 `[ABS]` entries)
+- **No code link**: ~40 of ~50 (only A1-7, A4-3, A4-4, A7-2, A11-5 and Kronos had one).
+- **Dataset unnamed or availability unstated**: ~30.
+- **Very small universes or windows** (≤ 60 assets or ≤ 2 years test): A2-1, A2-3, A4-4, A5-4, A9-1, A9-2, A11-5.
+- **No transaction costs mentioned** in abstract for trading results: most A1, A6, A7 entries; costs explicit only in A3-1, A5-2, A5-5, A6-1.
+- **Look-ahead risks**: LLM memorisation (A3 papers, partly addressed by A3-3/A3-6/A3-7); annual graphs used before their filing date (risk in A1-4, A3-5); index-membership survivorship (S&P 500 constituents used historically in A1-1, A1-4, A3-5, A12-2 — check in full text).
+- **Single market** (US or China) in almost all; Europe only in A5-5 (Euro Stoxx 50) and A8-2 (European banks).
+
+### Gap list used for Phase 3
+- **G1** Temporal (signed/directed) link prediction of market influence edges as the *target*.
+- **G2** Faithfulness testing of explanations from temporal stock/company graph models.
+- **G3** Point-in-time, LLM-built company relation graphs (leak-free construction).
+- **G4** Credit-event (bankruptcy, downgrade) propagation to linked firms' equity with graph learning on public data.
+- **G5** Network-level (cross-stock) manipulation detection using public enforcement labels.
+- **G6** Do learned/attention graphs match real economic relations?
+- **G7** Empirical footprint of AI-agent/model herding in co-movement networks.
+- **G8** Graph-guided context selection for time-series foundation models.
+- **G9** Cross-market transfer (Europe/AEX vs US).
+- **G10** Anytime-valid / multiple-testing-aware inference on network edges.
+- **G11** Conditional generation (forecast) of whole correlation networks.
 
 ---
 
