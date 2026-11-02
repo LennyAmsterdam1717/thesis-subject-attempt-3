@@ -215,3 +215,58 @@ Scoring (briefing §9): Novelty ×3, Supervisor fit ×2, Data ×2, Feasibility �
 **12. Scores.** Novelty 3 (9) · Fit 4 (8) · Data 4 (8) · Feasibility 4 (8) · Evaluation 4 · AI relevance 4 · Artefact 3 · Industry 3 · Interests 4 → **51 / 70**.
 
 **13. Questions.** Is a "negative/audit" thesis acceptable to the examiners? Which ground-truth relations does she trust most?
+
+### Card 6 — Coordinated, not isolated: temporal graph anomaly detection of pump-and-dump campaigns in US small caps using SEC enforcement labels *(I6)*
+
+**1. Pitch.** Manipulators often run several tickers at once (same promoters, same newsletters, same timing). 2026 equity detectors work one stock at a time; crypto work shows graphs help. This thesis builds a temporal co-movement/co-attention graph of small caps and detects anomalous coordinated subgraphs, labelled with tickers and dates named in SEC litigation releases.
+
+**2. Research question.** Does modelling cross-stock coordination (temporal graph anomaly detection) detect SEC-alleged pump-and-dump episodes earlier or more precisely than single-asset detectors?
+- SQ1: How can weak labels be built from SEC litigation releases (ticker, alleged period) without personal data?
+- SQ2: Do anomalous *edges/subgraphs* (sudden synchronous volume/price surges among unrelated small caps) precede alleged dumps?
+- SQ3: Do detections transfer across years and schemes?
+
+**3. Directions hit.** **Anomaly detection** ✔ · temporal graph ✔ · link prediction ◐ (unexpected edge formation as anomaly) · fits her graph-based financial-crime work (but avoids crowded AML) ✔.
+
+**4. Closest work and the difference.**
+- A9-1 Chen & Hybinette (2608.05373) `[ABS]`: velocity-based single-asset detector; labels from SEC v. Patel; tiny label set; explicitly suggests graph-based detection as future work.
+- A9-3 crypto ST-GNN pump-and-dump (2604.24590) `[ABS-s]`: graphs help — in crypto, with abundant labels.
+- No 2026 equity work with cross-stock graph detection and SEC litigation labels found.
+
+**5. Kill test.** Queries in NOTES.md (I6). SEC litigation releases do name target stocks (checked on sec.gov examples, e.g. LR-20892, LR-23137). → **Survived**, with a data-risk flag.
+
+**6. Data.** Labels: SEC litigation releases / complaints (sec.gov, public) → ticker + alleged window. Prices/volumes: daily data for small caps — **main risk**: many targets are OTC/pink-sheet stocks that may be missing from Stooq/yfinance (to verify); EDGAR filings for promotional 8-Ks. Optional co-attention edges: shared mentions in promotional press releases (text).
+Access risk: **medium–high**.
+
+**7. Method.** Daily snapshot graph of small caps: edges = abnormal synchronous volume/return co-movement (or shared promotion text). Detectors: per-stock baselines (velocity/shape score à la A9-1, isolation forest), graph methods (dynamic graph anomaly detection libraries, e.g. PyGOD for node anomalies; edge-stream methods such as MIDAS `[BACKGROUND]`). Evaluate per ticker-window.
+
+**8. Evaluation.** Labels are positive-unlabelled (unlabelled ≠ clean) → report precision@k, recall of labelled episodes, lead time; chronological splits by enforcement period. Sensitivity analysis on label noise.
+
+**9. Artefact.** Surveillance view: daily ranked list of suspicious coordinated clusters with the edges that triggered them.
+
+**10. Feasibility.** Medium-low because of data. Fallback: restrict to exchange-listed (NASDAQ/NYSE American) small caps with good price coverage, or reproduce A9-1 and add a graph layer on its labelled cases.
+
+**11. Ethics.** Litigation releases name individuals → extract **only tickers and dates**; do not store names. "Alleged" ≠ proven; avoid labelling firms as fraudulent in outputs. GDPR minimal.
+
+**12. Scores.** Novelty 4 (12) · Fit 4 (8) · Data 2 (4) · Feasibility 3 (6) · Evaluation 3 · AI relevance 4 · Artefact 4 · Industry 4 (market surveillance / RegTech) · Interests 4 → **49 / 70**.
+
+**13. Questions.** Does she see this as too close to the financial-crime line she warned against? Any access to exchange surveillance data via the AI & Finance Lab? Acceptable to use weak, alleged labels?
+
+---
+
+## 3. Runner-up cards (short)
+
+- **R1 (I9) Graph-guided context selection for time-series foundation models.** Use a lead-lag / relation graph to choose which co-series Chronos-2 sees in its group context. Motivated by A2-2 (mixing unrelated series hurts) and A2-1/A2-3 (TSFMs weak on returns). Fails the "not plain return prediction" gate unless the target is volatility or correlation. Score ≈ 46.
+- **R2 (I15) Tariff and sanctions shocks through company networks.** Event-based propagation of 2025 "Liberation Day" tariffs through 10-K-derived exposure + supplier graphs to equity returns. Weakened by Han et al. (Economics Letters 2026, tariff exposure index) and Andreou et al. 2025. Strong fit with Frank's politics interest; graph angle still open. Score ≈ 50.
+- **R3 (I17) Graph-aware risk layer for LLM trading agents.** TradeArena (A4-5) shows agent rationales ignore coupled assets; add a correlation/lead-lag graph tool to the agent and test whether risk violations drop. Crowded neighbourhood (agents), weak supervisor fit. Score ≈ 45.
+- **R4 (I10) European replication module.** AEX/Euronext version of Card 1 or Card 3 as an add-on chapter (G9). Not standalone.
+
+## 4. Score overview
+
+| Card | Topic | Score /70 | Main risk |
+|---|---|---|---|
+| 1 | SignFlip — signed lead-lag link prediction | **61** | Low predictability of noisy edges |
+| 2 | Time-honest LLM company graphs | **58** | Entity resolution, LLM cost |
+| 3 | Faithfulness audit of stock-graph explanations | **58** | Supervisor fit (XAI vs networks) |
+| 4 | Credit-event contagion to equity | **54** | Few events; data assembly |
+| 5 | Is the learned market graph real? | **51** | Negative result; reproducing models |
+| 6 | Coordinated manipulation detection | **49** | OTC price coverage; weak labels |
