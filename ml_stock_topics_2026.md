@@ -36,3 +36,39 @@ Survivors used for cards: I1, I4, I3, I5, I7, I6. Runners-up: I9, I15, I17, I10.
 ## 2. Full proposal cards
 
 Scoring (briefing §9): Novelty ×3, Supervisor fit ×2, Data ×2, Feasibility ×2, Evaluation clarity ×1, AI relevance ×1, Artefact ×1, Industry/Accenture ×1, Frank's interests ×1. Max = 70.
+
+### Card 1 — SignFlip: forecasting when signed lead-lag influence edges between stocks switch on, off or flip *(I1)*
+
+**1. Pitch.** Treat the market as a temporal, directed, *signed* graph of lead-lag influence (A moves → B follows, same or opposite direction) and make the *edges themselves* the prediction target: which influence edges will be active, absent, or flip sign next month — evaluated like a temporal-graph benchmark, then checked for economic value.
+
+**2. Research question.** Can temporal signed-graph learning forecast the activation, deactivation and sign flips of lead-lag influence edges among listed stocks better than persistence and statistical baselines, without look-ahead?
+- SQ1: How persistent are signed lead-lag edges, and which edge/node features (sector, size, liquidity, past sign history, structural balance of triads) predict flips?
+- SQ2: Do 2026 dynamic signed-network methods (e.g. IDP-DSN) beat strong persistence / exponential-smoothing baselines on market graphs, as they do on social graphs?
+- SQ3: Does a portfolio that only trades on *forecast* active edges beat one using last period's lead-lag graph, after transaction costs?
+
+**3. Supervisor directions hit.** Temporal ✔ · **signed, time-activated influence edges + time series** ✔ (her capitalised point) · **link prediction** ✔ · anomaly (sign-flip bursts as regime signals) ◐ · heterogeneous (sector/industry node types optional) ◐.
+
+**4. Closest 2026 work and the difference.**
+- A1-1 Fanshawe et al. (2601.04602) `[ABS]`: forecasts undirected 10-day correlations; signed only as an edge feature; no directed lead-lag, no sign-flip events, no link-prediction protocol.
+- A1-7 IDP-DSN (2604.18213, SIGIR 2026) `[ABS-s]` and 2602.12663 `[ABS-s]`: dynamic signed edge prediction — on online platforms, never on markets. This thesis *transfers and stress-tests* them on market networks.
+- A8-1 Deng & Zhang (2608.24703) `[ABS]`: clusters lead-lag structure statistically; no forecasting of edges.
+- A1-5 Guo (2609.08106) `[ABS]`: shows cross-stock modules do not help *return* prediction at scale → motivates predicting the *graph* instead of returns.
+- Background only: MSGNN/FiLL datasets (He et al. 2022) — yearly static signed lead-lag graphs.
+
+**5. Kill test.** Queries in NOTES.md (I1). Closest hits: a Padova MSc thesis framing lead/lag detection as temporal link prediction (unsigned, not peer-reviewed, date unverified) and a 2026 BSIC student blog comparing lead-lag graphs inside GNNs. No peer-reviewed or arXiv 2026 work forecasts *signed, directed* lead-lag edge dynamics on equities. → **Survived; must cite and differentiate from the Padova thesis** (signed + flips + leak-free protocol + economic test).
+
+**6. Data.** Daily adjusted prices of S&P 500 constituents (point-in-time membership needed against survivorship — Wikipedia change log or a public constituents history on GitHub; to verify) and optionally AEX/Euronext (G9). Sources: Stooq / `yfinance` (terms to check) — downloads must happen outside the cloud sandbox (allowlist). Sector: SEC SIC codes (EDGAR, free). Access risk: **low**; survivorship handling is the main care point.
+
+**7. Method sketch.** (i) Rolling windows (e.g. 60 trading days, monthly step) → lead-lag matrix per window via lagged regression / cross-correlation (as in FiLL) on market-residual returns; significance filter (FDR) → signed directed snapshot graphs. (ii) Task per pair: {none, +, −} next window (3-class, like IDP-DSN). (iii) Models: persistence; EWMA of past signs; logistic/GBM on pair features; static signed GNN (MSGNN via PyTorch Geometric Signed Directed — library exists); temporal models (TGN / DyRep via TGB tooling; IDP-DSN official code). Existing code: PyG Signed Directed `[BACKGROUND]`, TGB, IDP-DSN GitHub.
+
+**8. Baselines & evaluation.** Chronological train/val/test by window; no pair feature computed with data past the window end; embargo between windows. Metrics: macro-F1 and AUC per class, MRR with TGB-style negative sampling, sign-flip recall. Economic test: lead-lag long-short using forecast vs last-period graph, net of 10–20 bps costs. Statistical test: Diebold–Mariano style or block bootstrap.
+
+**9. Artefact.** "Influence radar" dashboard: for a chosen stock, the forecast leaders/laggers next month with sign and confidence; edges flagged as likely to flip (Streamlit / Plotly).
+
+**10. Feasibility (30 weeks).** Weeks 1–8 lit review + data pipeline; 9–14 graph construction + baselines; 15–22 temporal/signed models; 23–26 economic test + dashboard; 27–30 writing. Risks: (a) lead-lag edges are mostly noise → low predictability; (b) TGB-style models expect event streams, need snapshot adaptation. Fallback: restrict to sector-level or ETF-level graphs (fewer, stronger edges), or predict only *sign flips of persistent edges*.
+
+**11. Ethics.** Company-level nodes only; public prices; no personal data. Disclose GenAI coding assistance.
+
+**12. Scores.** Novelty 4 (×3=12) · Fit 5 (×2=10) · Data 5 (×2=10) · Feasibility 4 (×2=8) · Evaluation 5 · AI relevance 5 · Artefact 4 · Industry 3 · Frank's interests 4 → **61 / 70**.
+
+**13. Questions for the supervisor.** Is a 3-class signed link-prediction framing acceptable, or does she prefer a continuous edge-weight target? Daily or intraday lead-lag? Does UU have WRDS/CRSP access for survivorship-free prices? Would she accept the Padova thesis as "prior art" to beat?
