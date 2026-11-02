@@ -144,3 +144,39 @@ Scoring (briefing §9): Novelty ×3, Supervisor fit ×2, Data ×2, Feasibility �
 **12. Scores.** Novelty 4 (12) · Fit 3 (6) · Data 5 (10) · Feasibility 4 (8) · Evaluation 4 · AI relevance 5 · Artefact 4 · Industry 4 · Interests 5 → **58 / 70**.
 
 **13. Questions for the supervisor.** Is an XAI-audit thesis "network analysis" enough for her? Would she co-supervise with an XAI person (e.g. UU's explainability group)? Synthetic-heavy design acceptable?
+
+### Card 4 — When a firm fails, whose stock falls? Learning credit-event contagion over public company graphs *(I5)*
+
+**1. Pitch.** Older event studies show that bankruptcies and downgrades hurt suppliers' and customers' shares, but nobody in 2026 learns *which* linked firms react and how strongly. This thesis builds a public firm graph from EDGAR and trains a graph model to predict the abnormal equity reaction of every linked firm to a credit event.
+
+**2. Research question.** Can a graph model over public inter-firm relations predict which listed firms suffer (or gain from) abnormal stock returns after a connected firm's bankruptcy filing or downgrade, better than sector-peer and event-study baselines?
+- SQ1: Which relation types (customer, supplier, competitor, common sector, co-movement) carry contagion vs competitive (positive) effects?
+- SQ2: Does a signed edge (contagion − vs competition +) learned from past events generalise to new events?
+- SQ3: How early does the market price it (pre-filing distress window vs filing day)?
+
+**3. Supervisor directions hit.** **Credit default → stock market** ✔ (her separate problem) · signed influence (contagion vs competitive effect) ✔ · heterogeneous graph ✔ · link/edge-weight prediction ◐ · temporal ✔ · anomaly ◐.
+
+**4. Closest work and the difference.**
+- 2026: Brogaard & Chen working paper (CDS spreads + production-network GNN) `[UNVERIFIED]` — credit spreads (paid CDS), not equity reactions to events.
+- 2026: A3-5 Yılkı (2606.29290) `[ABS]` — propagates *text* signals over a supply-chain KG for returns; no credit events.
+- 2026: RIETI Arata (May 2026) `[ABS-s]` — GNN for shock propagation to firm growth on Japanese transaction data (non-public, not equity).
+- Evidence outside 2026: Das et al. CorpNet (SEC-filing graph → credit ratings); Alldredge et al. 2022 and Kolay et al. 2016 (event studies, no ML).
+- Search found **no 2026 ML work** on equity contagion of credit events (crowding map G4).
+
+**5. Kill test.** Queries in NOTES.md (I5). → **Survived.**
+
+**6. Data.** Events: 8-K Item 1.03 (bankruptcy/receivership) filings on EDGAR — free; public-company Chapter 11 lists (e.g. court/press lists; to verify); credit-rating actions disclosed under SEC Rule 17g-7(b) (rating agencies publish XBRL histories — **availability and format unverified**). Graph: major-customer mentions in 10-Ks (firms disclose large customers), competitor mentions (10-K Item 1), SIC codes; optionally LLM extraction from Card 2. Returns: Stooq/yfinance (delisted firms are a gap → abnormal returns only needed for *surviving linked* firms, which reduces the problem). Access risk: **medium** (event count may be small: perhaps a few hundred US public bankruptcies 2010–2025 — to verify).
+
+**7. Method sketch.** (i) Event set E (bankruptcy filings; optional downgrades). (ii) For each event, the 1–2-hop neighbourhood of linked listed firms in the graph as of the filing date. (iii) Target: CAR[−1,+1] and CAR[−30,+1] from a market/FF model per neighbour. (iv) Models: event-study baseline (all sector peers), gradient boosting on pair features, relational GNN (R-GCN/HGT in PyG) with signed edge outputs. (v) Explanation of which relation types carry contagion.
+
+**8. Evaluation.** Leave-events-out *by time* (train on earlier events). Metrics: RMSE / rank correlation of predicted vs realised CARs, top-k precision for "most hurt firms", sign accuracy (contagion vs competition). Placebo dates.
+
+**9. Artefact.** "Contagion map": enter a distressed firm → predicted exposure ranking of listed partners and peers with the edges that explain it. Clear risk-management use.
+
+**10. Feasibility.** Medium. Data assembly is the main work (weeks 5–14). Risk: few events and weak links → noisy labels. Fallbacks: widen events to large negative earnings shocks or rating downgrades; or a European version using public insolvency notices (to explore).
+
+**11. Ethics.** Company-level only; bankruptcy filings are public corporate events. Avoid individual executives.
+
+**12. Scores.** Novelty 5 (15) · Fit 4 (8) · Data 3 (6) · Feasibility 3 (6) · Evaluation 3 · AI relevance 4 · Artefact 4 · Industry 4 (credit-risk / supply-chain-risk consulting) · Interests 4 → **54 / 70**.
+
+**13. Questions for the supervisor.** Which credit events did she have in mind (defaults, downgrades, CDS)? Is a few-hundred-event dataset enough? Can UU provide WRDS (Compustat customer segments, CRSP delisting returns)? Interest from the AI & Finance Lab (Ferwerda)?
